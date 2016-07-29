@@ -68,7 +68,7 @@ describe('Take out food', function () {
             }];
         expect(halfPromotedItems).toEqual(expected)
     });
-    it('should build halfPromotedItems', function () {
+    it('should build subPromotedItems', function () {
         let cartItems = [
             {
                 id: 'ITEM0001',
@@ -83,7 +83,7 @@ describe('Take out food', function () {
                 count: 7
             }];
         let promotions = loadPromotions();
-        let subPromotedItems = buildSubPromotedItems(cartItems, promotions);
+        let subPromotedItems = buildSubPromotedItems(cartItems);
         let expected = [
             {
                 id: 'ITEM0001',
@@ -243,6 +243,7 @@ describe('Take out food', function () {
         expect(receiptString).toEqual(expected);
     });
 
+    
     it('should generate best charge when best is 指定菜品半价', function () {
         let tags = ["ITEM0001 x 1", "ITEM0013 x 2", "ITEM0022 x 1"];
         let summary = printReceipt(tags);
@@ -259,7 +260,6 @@ describe('Take out food', function () {
 ===================================`.trim()
         expect(summary).toEqual(expected)
     });
-
 
     it('should generate best charge when best is 满30减6元', function () {
         let tags = ["ITEM0013 x 4", "ITEM0022 x 1"];

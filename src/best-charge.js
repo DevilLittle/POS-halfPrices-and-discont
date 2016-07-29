@@ -28,18 +28,13 @@ function buildHalfPromotedItems(cartItems, promotions) {
         return Object.assign({}, cartItem, {halfPayPrice, halfSaved});
     })
 }
-function buildSubPromotedItems(cartItems, promotions) {
-    let currentPromotion = promotions.find((promotion)=>promotion.type === '满30减6元');
-    // let totalPrice = 0;
+function buildSubPromotedItems(cartItems) {
     return cartItems.map((cartItem)=> {
         let subPayPrice = cartItem.count * cartItem.price;
-        // totalPrice += subTotalPrice;
         let subSaved = 0;
         return Object.assign({}, cartItem, {subPayPrice, subSaved});
-        // console.log(subPromotedItems);
     });
 }
-
 function calculateTotalPrices(halfPromotedItems, subPromotedItems) {
     let halfTotalPrices = halfPromotedItems.reduce((result, {halfPayPrice, halfSaved})=> {
         result.halfTotalPayPrice += halfPayPrice;
@@ -102,7 +97,6 @@ function buildReceiptString(receipt) {
             let line = `${name} x ${count} = ${count * price}元`;
             lines.push(line);
         }
-
         if (receipt.subTotalSaved > 0) {
             lines.push('-----------------------------------');
             lines.push('使用优惠:');
@@ -126,7 +120,7 @@ function printReceipt(tags) {
     let promotions = loadPromotions();
     let halfPromotedItems = buildHalfPromotedItems(cartItems, promotions);
     // console.log(halfPromotedItems);
-    let subPromotedItems = buildSubPromotedItems(cartItems, promotions);
+    let subPromotedItems = buildSubPromotedItems(cartItems);
     // console.log(subPromotedItems);
     let totalPrices = calculateTotalPrices(halfPromotedItems, subPromotedItems);
     // console.log(totalPrices);
